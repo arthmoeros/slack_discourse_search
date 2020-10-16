@@ -15,7 +15,7 @@ app.register(require('fastify-raw-body'), {
 })
 
 app.post('/slack/discourse_search', async (req, reply) => {
-  if (!verifySlackSignature(req, process.env.SLACK_API_SIGNINGSECRET)) {
+  if (!verifySlackSignature(req, process.env.SLACK_APP_SIGNINGSECRET)) {
     loginfo('Recieved Bad api call from slack - Signature doesnt match');
     throw { statusCode: 403, message: 'Signature doesnt match' };
   }
