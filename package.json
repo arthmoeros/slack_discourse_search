@@ -1,0 +1,25 @@
+{
+  "name": "slack_discourse_search",
+  "version": "1.0.0",
+  "description": "Simple API to run searches from Slack command to a Discourse server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arthmoeros/slack_discourse_search.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arthmoeros/slack_discourse_search/issues"
+  },
+  "homepage": "https://github.com/arthmoeros/slack_discourse_search#readme",
+  "dependencies": {
+    "fastify": "^3.1.1",
+    "fastify-raw-body": "^3.0.0",
+    "request": "^2.88.2",
+    "request-promise-native": "^1.0.9"
+  }
+}
