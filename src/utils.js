@@ -33,7 +33,7 @@ function formatResults(userid, results, term){
       formatted += `\n- *${result.title}* (${result.replies} respuesta${result.replies > 1 ? 's' : ''}) [<${result.link}|link>]${result.solved ? ' :heavy_check_mark:' : ''}`
     });
     if (minf.length === 5) {
-      formatted += `_Es posible que encuentres más resultados <${dBaseApiUrl}/search?q=${encodeURIComponent(term)}|aquí>.`;
+      formatted += `\n_Es posible que encuentres más resultados <${dBaseApiUrl}/search?q=${encodeURIComponent(term)}|aquí>._`;
     }
     return formatted;
   } else {
