@@ -10,11 +10,13 @@ const loginfo = utils.loginfo;
 const formatResults = utils.formatResults;
 const verifySlackSignature = utils.verifySlackSignature;
 
+app.register(require('fastify-formbody'))
 app.register(require('fastify-raw-body'), {
   runFirst: true
 })
 
 app.post('/slack/discourse_search', async (req, reply) => {
+  loginfo(`Got request, headers: ${JSON.stringify(req.headers)}`);
   if (!verifySlackSignature(req, process.env.SLACK_APP_SIGNINGSECRET)) {
     loginfo('Recieved Bad api call from slack - Signature doesnt match');
     throw { statusCode: 403, message: 'Signature doesnt match' };
@@ -24,16 +26,16 @@ app.post('/slack/discourse_search', async (req, reply) => {
   loginfo('Recieved OK api call from slack');
   try {
     let searchResults = await discourse.search(term, false);
-    return {
+    let response = JSON.stringify({
       "response_type": "in_channel",
-      "text": {
-				"type": "mrkdwn",
-				"text": `${formatResults(userid, searchResults)}`
-			}
-    };
+			"text": `${formatResults(userid, searchResults, term)}`
+    });
+    loginfo(response);
+    reply.header('Content-Type','application/json');
+    reply.send(response);
   } catch (error) {
     loginfo('Thrown error');
-    console.error(error);
+    console.log(error);
     throw { statusCode: 500, message: error.message };
   }
 });

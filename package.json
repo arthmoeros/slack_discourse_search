@@ -4,6 +4,7 @@
   "description": "Simple API to run searches from Slack command to a Discourse server",
   "main": "index.js",
   "scripts": {
+    "start": "node src/core.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +19,7 @@
   "homepage": "https://github.com/arthmoeros/slack_discourse_search#readme",
   "dependencies": {
     "fastify": "^3.1.1",
+    "fastify-formbody": "^5.0.0",
     "fastify-raw-body": "^3.0.0",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.9"
