@@ -9,6 +9,7 @@ const app = fastify();
 const loginfo = utils.loginfo;
 const formatResults = utils.formatResults;
 const verifySlackSignature = utils.verifySlackSignature;
+const emptyResponse = utils.emptyResponse;
 
 app.register(require('fastify-formbody'))
 app.register(require('fastify-raw-body'), {
@@ -25,14 +26,23 @@ app.post('/slack/discourse_search', async (req, reply) => {
   let term = req.body.text;
   loginfo('Recieved OK api call from slack');
   try {
-    let searchResults = await discourse.search(term, false);
-    let response = JSON.stringify({
-      "response_type": "in_channel",
-			"text": `${formatResults(userid, searchResults, term)}`
-    });
-    loginfo(response);
-    reply.header('Content-Type','application/json');
-    reply.send(response);
+    if (term.trim() === "") {
+      let response = JSON.stringify({
+        "response_type": "in_channel",
+        "text": `${emptyResponse(userid)}`
+      });
+      reply.header('Content-Type','application/json');
+      reply.send(response);
+    } else {
+      let searchResults = await discourse.search(term, false);
+      let response = JSON.stringify({
+        "response_type": "in_channel",
+        "text": `${formatResults(userid, searchResults, term)}`
+      });
+      loginfo(response);
+      reply.header('Content-Type','application/json');
+      reply.send(response);
+    }
   } catch (error) {
     loginfo('Thrown error');
     console.log(error);

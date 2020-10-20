@@ -43,6 +43,13 @@ function formatResults(userid, results, term){
   }
 }
 
+function emptyResponse(userid){
+  let response = `Hola <@${userid}>, escribe tu duda junto con el comando, por ejemplo \`/ask quiero saber algo\`.`;
+  response += `\nTambién puedes ir directo <${dBaseApiUrl}/new-topic|aquí> y crear una nueva pregunta.`;
+  return response;
+}
+
 module.exports.verifySlackSignature = verifySlackSignature;
 module.exports.loginfo = loginfo;
 module.exports.formatResults = formatResults;
+module.exports.emptyResponse = emptyResponse;
